@@ -1,0 +1,2 @@
+{ "_id" : { "$oid" : "54deec4bfb7a2fba6d183e9e" }, "full_name" : "Bobby", "username" : "bob", "email" : "bob@bob.com", "__v" : 0 }
+{ "_id" : { "$oid" : "54deef48fb7a2fba6d183e9f" }, "full_name" : "Alice", "username" : "alice", "email" : "alice@alice.com", "__v" : 0 }

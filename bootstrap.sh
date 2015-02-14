@@ -31,3 +31,7 @@ sudo apt-get install -y mongodb-org
 
 cd /vagrant
 npm install
+
+cd /vagrant/data
+# mongoexport --collection users --db test -o basedata.json
+mongoimport --db test --collection users < basedata.json 
