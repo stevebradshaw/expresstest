@@ -55,8 +55,22 @@ router.get('/user/:username', function(req,res) {
 //        res.end() ;
        })
 
+.get('/user', function(req,res) {
+         UserModel.find()
+                  .exec(function(err,users) {
+    console.log('  Found - ' + users.length) ;
+    if (users.length > 0) {
+      res.json(users) ;
+    } else {
+      res.status(404) ;
+    }
+    res.end();
+  }) ;
+
+})
+
       .post('/user', function(req,res) {
-        console.log(req.body) ;
+        console.log(req) ;
         var user = new UserModel() ;
         user.email = req.body.email ;
         user.username = req.body.username;
@@ -66,11 +80,12 @@ router.get('/user/:username', function(req,res) {
           if (err) {
             res.status(500) ;
             res.send(err) ;
-//            res.end() ;
+            res.end() ;
           } else {
             res.status(201) ;
+			res.setHeader('Location', req.headers.host + req.originalUrl + '/' + user.username) ;
             console.log(user.id) ;
-//            res.end() ;
+            res.end() ;
           }
         });
 
