@@ -12,10 +12,10 @@ sudo apt-get install -y g++
 sudo apt-get install -y git
 sudo apt-get install -y build-essentials
 
-curl https://gist.github.com/stevebradshaw/11dfab199e7b3c247efc/download | tar -zxf - --no-anchored --strip-components=1  --extract .vimrc
+curl -s https://gist.github.com/stevebradshaw/11dfab199e7b3c247efc/download | tar -zxf - --no-anchored --strip-components=1  --extract .vimrc
 
 cd /tmp
-wget http://nodejs.org/dist/v0.12.0/node-v0.12.0.tar.gz
+wget -q http://nodejs.org/dist/v0.12.0/node-v0.12.0.tar.gz
 tar zxf node-v0.12.0.tar.gz
 cd node-v0.12.0/
 ./configure
