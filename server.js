@@ -78,8 +78,7 @@ mongoose.connect(dbURI, function(err) {
 	var q ;
 	if (req.params.username) {
 	  q = { username: req.params.username } ;
-console.log(q) ;
-//      var user = new UserModel() ;
+
 	  UserModel.remove(q, function (err, c) {
        if (err) throw err;
 
@@ -87,12 +86,9 @@ console.log(q) ;
 		   res.status(404) ;
 	   else
 		   res.status(204) ;
-console.log('removed ' + q) ;
-console.log(c) ;
+       res.end() ;
 	  }) ;
-		res.end() ;
 	} else {
-console.log('must specify user to remove') ;
       res.status(400) ;
       res.end() ;
     }
