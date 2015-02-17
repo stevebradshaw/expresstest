@@ -11,4 +11,12 @@ You need to install:
 * Vagrant - https://www.vagrantup.com/
 * VirtualBox - https://www.virtualbox.org/
 
-Once these are installed, clone the git repository into a directory on your machine, open a command line and navigate to the project directory and `vagrant up`
+Once these are installed, clone the git repository into a directory on your machine, open a command line and navigate to the project directory and issue 
+
+`$ vagrant up`
+
+to build the environment. When the VM is running, connect to it with
+
+`$ vagrant ssh`
+
+from within the directory containing the Vagrantfile.
