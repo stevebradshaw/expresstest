@@ -29,25 +29,18 @@ mongoose.connect(dbURI, function(err) {
 
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
+  app.use(morgan('combined'))
 
   var router = express.Router();
 
-  router.use(function(req, res, next) {
-    // do logging
-    d = new Date().toUTCString() ;
-    console.log(d + ' - ' + req.method + ' ' + req.originalUrl);
-    next(); // make sure we go to the next routes and don't stop here
-  });
-
-  router.get('/user(/:username)?', function(req,res) {
+  router.get('/user/:username?', function(req,res) {
 	var q ;
 	if (req.params.username)
 	  q = { username: req.params.username } ;
 	else
       q = {} ;	
-console.log(q) ;
+
     UserModel.find(q)
-//    UserModel.find({ username: req.params.username })
 	         .select("username full_name email")
              .exec(function(err,users) {
       console.log('  Found - ' + users.length) ;
@@ -60,21 +53,6 @@ console.log(q) ;
     }) ;
     
   })
-
-/*  .get('/user', function(req,res) {
-    UserModel.find()
-	         .select("username full_name email")
-             .exec(function(err,users) {
-      console.log('  Found - ' + users.length) ;
-      if (users.length > 0) {
-        res.json(users) ;
-      } else {
-        res.status(404) ;
-      }
-      res.end();
-    }) ;
-
-  })*/
 
   .post('/user', function(req,res) {
     var user = new UserModel() ;
@@ -96,8 +74,28 @@ console.log(q) ;
     });
   })
 
-  .delete('/user', function(req,res) {
-    res.end() ;
+  .delete('/user/:username', function(req,res) {
+	var q ;
+	if (req.params.username) {
+	  q = { username: req.params.username } ;
+console.log(q) ;
+//      var user = new UserModel() ;
+	  UserModel.remove(q, function (err, c) {
+       if (err) throw err;
+
+	   if (c == 0)
+		   res.status(404) ;
+	   else
+		   res.status(204) ;
+console.log('removed ' + q) ;
+console.log(c) ;
+	  }) ;
+		res.end() ;
+	} else {
+console.log('must specify user to remove') ;
+      res.status(400) ;
+      res.end() ;
+    }
   })
 
   .put('/user', function(req,res) {
