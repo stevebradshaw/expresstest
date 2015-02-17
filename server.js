@@ -1,6 +1,7 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
-    mongoose = require('mongoose') ;
+    mongoose = require('mongoose'),
+    morgan = require('morgan') ;
 
 var dbURI = "mongodb://localhost:27017/test" ; 
 
