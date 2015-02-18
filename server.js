@@ -94,31 +94,53 @@ mongoose.connect(dbURI, function(err) {
     }
   })
 
-  .put('/user', function(req,res) {
-    res.end() ;
+  .put('/user/:username', function(req,res) {
+	if (req.params.username && JSON.stringify(req.body)!='{}') {
+	  var q = { username: req.params.username } ;
+      if (req.body.email && req.body.full_name) {
+        UserModel.update(q,req.body,{ multi: true }, function (err,c) {
+	      if (err) {
+		 	res.status(500) ;
+			res.send(err) ;
+			res.end() ;
+		  } else {
+		    res.status(200) ;
+		    res.end() ;
+		  }
+	    }) ;
+	  } else {
+		  res.status(400) ;
+		  res.end() ;
+	  }
+	} else {
+      res.status(400) ;
+	  res.end() ;
+	}
+	res.end() ;
   })
 
   .patch('/user/:username', function(req,res) {
-	if (req.params.username) {
+	if (req.params.username && JSON.stringify(req.body)!='{}') {
 	  var q = { username: req.params.username } ;
-console.log(req.body) ;
       if (req.body.email || req.body.full_name) {
         UserModel.update(q,req.body,{ multi: true }, function (err,c) {
-		  if (err) {
-		  	  res.status(500) ;
-			  res.send(err) ;
-			  res.end() ;
+	      if (err) {
+		 	res.status(500) ;
+			res.send(err) ;
+			res.end() ;
+		  } else {
+		    res.status(200) ;
+		    res.end() ;
 		  }
-		  res.status(200) ;
-		  res.end() ;
-		  console.log(c) ;
 	    }) ;
+	  } else {
+	    res.status(400) ;
+		res.end() ;
 	  }
 	} else {
-      res.status(415) ;
+      res.status(400) ;
 	  res.end() ;
 	}
-    res.end() ;
   }) ; 
 
   app.use('/api', router) ;
