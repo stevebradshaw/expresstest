@@ -75,9 +75,9 @@ mongoose.connect(dbURI, function(err) {
   })
 
   .delete('/user/:username', function(req,res) {
-	var q ;
+
 	if (req.params.username) {
-	  q = { username: req.params.username } ;
+	  var q = { username: req.params.username } ;
 
 	  UserModel.remove(q, function (err, c) {
        if (err) throw err;
@@ -98,7 +98,26 @@ mongoose.connect(dbURI, function(err) {
     res.end() ;
   })
 
-  .patch('/user', function(req,res) {
+  .patch('/user/:username', function(req,res) {
+	if (req.params.username) {
+	  var q = { username: req.params.username } ;
+console.log(req.body) ;
+      if (req.body.email || req.body.full_name) {
+        UserModel.update(q,req.body,{ multi: true }, function (err,c) {
+		  if (err) {
+		  	  res.status(500) ;
+			  res.send(err) ;
+			  res.end() ;
+		  }
+		  res.status(200) ;
+		  res.end() ;
+		  console.log(c) ;
+	    }) ;
+	  }
+	} else {
+      res.status(415) ;
+	  res.end() ;
+	}
     res.end() ;
   }) ; 
 
