@@ -31,9 +31,15 @@ mongoose.connect(dbURI, function(err) {
   app.use(bodyParser.json());
   app.use(morgan('combined'))
 
+  app.use(function(req,res,next) {
+    req.sessionStatus = {'auth': true} ;
+	next() ;
+  }) ;
+
   var router = express.Router();
 
   router.get('/user/:username?', function(req,res) {
+console.log(req.sessionStatus) ;
 	var q ;
 	if (req.params.username)
 	  q = { username: req.params.username } ;
@@ -143,6 +149,10 @@ mongoose.connect(dbURI, function(err) {
 	}
   }) ; 
 
+app.use('/api/user', function(req,res,next) {
+	console.log('before the request - %s %s', req.method, req.url) ;
+	next() ;
+}) ;
   app.use('/api', router) ;
 
   var server = app.listen(3000, function() {

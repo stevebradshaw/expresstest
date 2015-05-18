@@ -20,3 +20,10 @@ to build the environment. When the VM is running, connect to it with
 `$ vagrant ssh`
 
 from within the directory containing the Vagrantfile.
+
+Once connectedi to the guest, start the application by
+
+`$ cd /vagrant
+$ node server.js
+
+
