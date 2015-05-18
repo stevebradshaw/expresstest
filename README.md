@@ -24,6 +24,6 @@ from within the directory containing the Vagrantfile.
 Once connectedi to the guest, start the application by
 
 `$ cd /vagrant
-$ node server.js
+$ node server.js`
 
 
