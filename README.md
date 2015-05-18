@@ -1,4 +1,6 @@
-# node.js & mongodb environment using Vagrant
+# ExpressTest
+
+node.js & mongodb environment using Vagrant
 
 Vagrantfile providing an ubuntu 12.04 LTS development environment for node.js and mongodb with a sample node.js RESTful web service demo.
 
@@ -23,7 +25,10 @@ from within the directory containing the Vagrantfile.
 
 Once connectedi to the guest, start the application by
 
-`$ cd /vagrant
-$ node server.js`
+`$ cd /vagrant`
+`$ node server.js`
 
+You can then interact with the RESTful webservice from the host machine with:
+
+`$ curl -X OPTIONS http://localhost:8080/user`
 
